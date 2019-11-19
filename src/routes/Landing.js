@@ -1,9 +1,13 @@
 import React, {
     useState,
+    useEffect,
 } from 'react'
+import { connect } from 'react-redux'
+import { setUser } from '../store/signup/actions'
 import classes from '../css/Landing.module.css'
 
 const Landing = (props) => {
+
     const [formSubmission, setFormSubmission] = useState({
         firstName: '',
         lastName: '',
@@ -14,9 +18,23 @@ const Landing = (props) => {
 
     const [confirmPassword, setConfirmPasssword] = useState('')
 
+    const [blankField, setBlankField] = useState(true)
+
     const handleSubmit = (e) => {
-        console.log(e)
-        e.preventDefault();
+        if (confirmPassword !== formSubmission.password) return
+        let blank  = false
+        Object.keys(formSubmission).forEach(element => {
+            if (formSubmission[element] === '')
+                blank = true
+        });
+        if (blank) {
+            setBlankField(blank)
+            e.preventDefault();
+            return
+        }
+        console.log('pushing')
+        props.history.push('/verify')
+        e.stopPropagation();
     }
 
     const handleClear = (e) => {
@@ -27,10 +45,12 @@ const Landing = (props) => {
             email: '',
             password: '',
         })
+        setConfirmPasssword('')
         e.preventDefault();
     }
 
     const modifyFormSubmission = (e, type) => {
+        setBlankField(false)
         let newFormSubmission = {...formSubmission}
         newFormSubmission[type] = e.target.value
         setFormSubmission(newFormSubmission)
@@ -57,6 +77,7 @@ const Landing = (props) => {
                 <label>Confirm Password</label>
                 <input onChange={handlePasswordCheck} type='password'/>
                 {formSubmission.password.length > 0 ? confirmPassword !== formSubmission.password ? <label>Password does not match</label> : <label>Passwords match</label> : null}
+                {blankField ? <label>One or more fields is blank</label> : null}
                 <div>
                     <button>Submit</button>
                     <button onClick={handleClear}>Clear</button>
@@ -66,4 +87,14 @@ const Landing = (props) => {
     )
 }
 
-export default Landing
+const mapStateToProps = (state) => ({
+    user: state
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: e => dispatch(setUser)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Landing)
