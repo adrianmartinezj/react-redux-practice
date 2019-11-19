@@ -9,13 +9,18 @@ export const SET_USER_FAILURE = 'SET_USER_FAILURE'
 
 
 export const setUser = (user) => {
-    // Do some verification
-    dispatchEvent({type: SET_USER_REQUEST})
-
-    dispatchEvent({
+    return ({
         type: SET_USER_SUCCESS,
         payload: user,
     })
+
+    // dispatchEvent({type: SET_USER_REQUEST})
+
+    // Do some verification
+    // dispatchEvent({
+    //     type: SET_USER_SUCCESS,
+    //     payload: user,
+    // })
     
     // Something bad happened...
 

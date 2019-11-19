@@ -28,7 +28,14 @@ const reducer = (state=initialState, action) => {
         case SET_USER_REQUEST:
             return { ...state, }
         case SET_USER_SUCCESS:
-            return { ...state, ...action.payload}
+            return { 
+                ...state, 
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                userName: action.payload.userName,
+                email: action.payload.email,
+                password: action.payload.password,
+            }
         case SET_USER_FAILURE:
             return { ...state, }
         default:

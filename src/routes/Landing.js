@@ -8,6 +8,11 @@ import classes from '../css/Landing.module.css'
 
 const Landing = (props) => {
 
+    const {
+        setUser,
+        user,
+    } = props
+
     const [formSubmission, setFormSubmission] = useState({
         firstName: '',
         lastName: '',
@@ -18,10 +23,18 @@ const Landing = (props) => {
 
     const [confirmPassword, setConfirmPasssword] = useState('')
 
-    const [blankField, setBlankField] = useState(true)
+    const [blankField, setBlankField] = useState(false)
+
+    useEffect(() => {
+        if (user !== null && user !== undefined)
+            setFormSubmission(user)
+    }, [user])
 
     const handleSubmit = (e) => {
-        if (confirmPassword !== formSubmission.password) return
+        if (confirmPassword !== formSubmission.password) {
+            e.preventDefault();
+            return
+        }
         let blank  = false
         Object.keys(formSubmission).forEach(element => {
             if (formSubmission[element] === '')
@@ -32,10 +45,10 @@ const Landing = (props) => {
             e.preventDefault();
             return
         }
-        console.log('pushing')
-        props.setUser(formSubmission)
-        props.history.push('/verify')
+        e.preventDefault();
         e.stopPropagation();
+        setUser(formSubmission)
+        props.history.push('/verify')
     }
 
     const handleClear = (e) => {
@@ -89,12 +102,12 @@ const Landing = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-    user: state
+    user: state.signup
 })
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
-        setUser: e => dispatch(setUser)
+        setUser: user => dispatch(setUser(user))
     }
 }
 
