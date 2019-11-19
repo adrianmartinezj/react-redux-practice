@@ -18,6 +18,7 @@ const Verification = (props) => {
 
     return (
         <div className={classes.mainContainer}>
+            <h3>Take a moment to ensure your information is correct.</h3>
             <label>First Name</label>
             <input value={user.firstName}/>
             <label>Last Name</label>

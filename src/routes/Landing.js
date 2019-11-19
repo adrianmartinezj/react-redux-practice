@@ -89,7 +89,7 @@ const Landing = (props) => {
                 <label>Password</label>
                 <input value={formSubmission.password} onChange={(e) => {modifyFormSubmission(e, 'password')}} type='password'/>
                 <label>Confirm Password</label>
-                <input onChange={handlePasswordCheck} type='password'/>
+                <input value={confirmPassword} onChange={handlePasswordCheck} type='password'/>
                 {formSubmission.password.length > 0 ? confirmPassword !== formSubmission.password ? <label>Password does not match</label> : <label>Passwords match</label> : null}
                 {blankField ? <label>One or more fields is blank</label> : null}
                 <div>
