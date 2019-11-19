@@ -1,9 +1,12 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import signup from './signup/reducer'
 
+const rootReducer = combineReducers({
+    signup
+})
 
 const store = createStore(
-    signup,
+    rootReducer,
 )
 
 export default store

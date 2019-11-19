@@ -33,6 +33,7 @@ const Landing = (props) => {
             return
         }
         console.log('pushing')
+        props.setUser(formSubmission)
         props.history.push('/verify')
         e.stopPropagation();
     }

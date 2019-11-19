@@ -31,6 +31,8 @@ const reducer = (state=initialState, action) => {
             return { ...state, ...action.payload}
         case SET_USER_FAILURE:
             return { ...state, }
+        default:
+            return { ...state, }
     }
 }
 
